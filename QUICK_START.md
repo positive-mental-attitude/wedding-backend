@@ -1,11 +1,11 @@
-# Quick Start Guide - Afterparty RSVP Backend
+# Quick Start Guide - Afterparty RSVP Backend (MongoDB Edition)
 
-This guide will get you up and running with the Flask backend in minutes.
+This guide will get you up and running with the Flask backend using MongoDB Atlas in minutes.
 
 ## Prerequisites
 
 - Python 3.8+
-- PostgreSQL (running locally or remotely)
+- MongoDB Atlas cluster (or local MongoDB)
 - Basic knowledge of command line
 
 ## Quick Setup (5 minutes)
@@ -13,7 +13,7 @@ This guide will get you up and running with the Flask backend in minutes.
 ### 1. Run the Setup Script
 
 ```bash
-cd project/backend
+cd wedding-backend-mongo
 ./setup.sh
 ```
 
@@ -24,14 +24,13 @@ This will:
 
 ### 2. Configure Database
 
-Edit the `.env` file with your PostgreSQL credentials:
+Edit the `.env` file with your MongoDB Atlas URI:
 
 ```env
-DATABASE_URL=postgresql://username:password@localhost:5432/afterparty_db
-WEDDING_DATABASE_URL=postgresql://username:password@localhost:5432/wedding_rsvp_db
+MONGODB_URI=mongodb+srv://<username>:<password>@<cluster-url>/wedding?retryWrites=true&w=majority
 ```
 
-### 3. Initialize Database
+### 3. (Optional) Check MongoDB Connection
 
 ```bash
 python init_db.py
@@ -114,7 +113,7 @@ curl -X POST http://localhost:5000/api/rsvp \
 ```json
 {
   "message": "RSVP received",
-  "rsvp_id": 1
+  "rsvp_id": "<mongodb_object_id>"
 }
 ```
 
@@ -157,7 +156,7 @@ curl -X POST http://localhost:5000/api/wedding-rsvp \
 ```json
 {
   "message": "Wedding RSVP (yes) received",
-  "rsvp_id": 1
+  "rsvp_id": "<mongodb_object_id>"
 }
 ```
 
@@ -171,7 +170,7 @@ curl http://localhost:5000/api/rsvp
 {
   "rsvps": [
     {
-      "id": 1,
+      "id": "<mongodb_object_id>",
       "name": "John Smith",
       "telegram": "@johnsmith",
       "phone_number": "+6598765432",
@@ -192,56 +191,15 @@ curl http://localhost:5000/api/wedding-rsvp
 {
   "rsvps": [
     {
-      "id": 1,
+      "id": "<mongodb_object_id>",
       "response_type": "yes",
       "full_name": "Jane Doe",
       "telegram_username": "@janedoe",
       "phone_number": "+6512345678",
       "dietary_restrictions": "Vegetarian, no nuts",
-      "message": null,
-      "note": null,
       "created_at": "2024-01-15T10:30:00"
     }
   ],
-  "rsvps_by_type": {
-    "yes": [...],
-    "no": [...],
-    "maybe": [...]
-  },
-  "count": 1,
-  "count_by_type": {
-    "yes": 1,
-    "no": 0,
-    "maybe": 0
-  }
+  "count": 1
 }
-```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **"Connection refused" error**
-   - Make sure PostgreSQL is running
-   - Check your database credentials in `.env`
-
-2. **"Module not found" error**
-   - Activate virtual environment: `source venv/bin/activate`
-   - Reinstall dependencies: `pip install -r requirements.txt`
-
-3. **"Permission denied" error**
-   - Make sure PostgreSQL user has proper permissions
-   - Check database exists: `createdb afterparty_db`
-
-### Debug Mode
-
-Enable debug mode by setting `FLASK_DEBUG=True` in your `.env` file.
-
-## Next Steps
-
-- Integrate with your frontend application
-- Set up production deployment
-- Add authentication if needed
-- Configure logging and monitoring
-
-For detailed documentation, see `README.md`. 
+``` 

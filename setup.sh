@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Afterparty RSVP Backend Setup Script
+# Afterparty RSVP Backend Setup Script (MongoDB Edition)
 # This script automates the setup process for the Flask backend
 
 set -e  # Exit on any error
 
-echo "🚀 Setting up Afterparty RSVP Backend..."
+echo "🚀 Setting up Afterparty RSVP Backend (MongoDB Edition)..."
 echo "========================================"
 
 # Check if Python 3 is installed
@@ -51,7 +51,7 @@ if [ ! -f ".env" ]; then
     echo "⚙️  Creating .env file from template..."
     cp env.example .env
     echo "✅ .env file created"
-    echo "⚠️  Please edit .env file with your database credentials"
+    echo "⚠️  Please edit .env file with your MongoDB Atlas URI"
 else
     echo "✅ .env file already exists"
 fi
@@ -60,9 +60,8 @@ echo ""
 echo "🎉 Setup completed successfully!"
 echo ""
 echo "Next steps:"
-echo "1. Edit .env file with your PostgreSQL credentials"
-echo "2. Make sure PostgreSQL is running"
-echo "3. Run: python init_db.py"
-echo "4. Run: python app.py"
+echo "1. Edit .env file with your MongoDB Atlas URI"
+echo "2. Run: python init_db.py (optional)"
+echo "3. Run: python app.py"
 echo ""
 echo "For testing, run: python test_api.py" 
